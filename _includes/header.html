@@ -5,6 +5,7 @@
       <div class="nav-toggle-close"><i class="fa fa-times" aria-hidden="true"></i></div>
 
       <nav class="site-nav">
+        <p>-------{{site.pages}}----------</p>
         {% for page in site.pages %}
           {% unless page.name == '404.html' %}
             {% if page.title %}
