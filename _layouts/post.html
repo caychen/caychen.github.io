@@ -56,23 +56,23 @@ layout: default
         <p class="post-author-bio">{{ site.about-author }}</p>
         <div class="post-author-meta">
           {% if site.email %}
-            <li><a href="mailto:{{ site.email }}" target="_blank"><i class="fa fa-envelope-o" aria-hidden="true"></i></a></li>
+            <a href="mailto:{{ site.email }}" target="_blank"><i class="fa fa-envelope-o" aria-hidden="true"></i></a>
           {% else %}
           {% endif %}
           {% if site.github %}
-            <li><a href="{{ site.github }}" target="_blank"><i class="fa fa-github" aria-hidden="true"></i></a></li>
+            <a href="{{ site.github }}" target="_blank"><i class="fa fa-github" aria-hidden="true"></i></a>
           {% else %}
           {% endif %}
           {% if site.twitter %}
-            <li><a href="{{ site.twitter }}" target="_blank"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+            <a href="{{ site.twitter }}" target="_blank"><i class="fa fa-twitter" aria-hidden="true"></i></a>
           {% else %}
           {% endif %}
           {% if site.facebook %}
-            <li><a href="{{ site.facebook }}" target="_blank"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
+            <a href="{{ site.facebook }}" target="_blank"><i class="fa fa-facebook" aria-hidden="true"></i></a>
           {% else %}
           {% endif %}
           {% if site.youtube %}
-            <li><a href="{{ site.youtube }}" target="_blank"><i class="fa fa-youtube" aria-hidden="true"></i></a></li>
+            <a href="{{ site.youtube }}" target="_blank"><i class="fa fa-youtube" aria-hidden="true"></i></a>
           {% else %}
           {% endif %}
         </div>
