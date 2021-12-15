@@ -1,5 +1,5 @@
 # Site settings
-title: Lokmont
+title: Caychen
 description: Lokmont is a responsive simple theme for Jekyll.
 baseurl: "" # the subpath of your site, e.g. /blog
 url: "https://lokmont-jekyll.netlify.com/" # the base hostname & protocol for your site, e.g. http://example.com
@@ -10,14 +10,14 @@ hero-title: Welcome to Lokmont
 hero-description: A Responsive Jekyll Blog Theme. Theme suitable for any kind of creators.
 
 # Author - Creator
-author-name: Ben Campbell
+author-name: Caychen
 author-image: 10.jpg
-about-author: My name is Ben Campbell. I'm an actor and a musician. Retro wolf banjo succulen tsgoch ujang tumeric hammock offal.
-author-email: help.example@gmail.com
-author-twitter: https://twitter.com/
-author-facebook: https://twitter.com/
-author-instagram: https://www.instagram.com/
-author-pinterest: https://pinterest.com/
+about-author: 我的英文名Caychen。我是个菜菜的程序员。
+author-email: caychen@aliyun.com
+author-github: https://www.github.com/caychen
+author-gitee: https://www.gitee.com/caychen
+author-csdn: https://www.blog.csdn.net/caychen
+author-jianshu: https://www.jianshu.com/u/c64d133ef703
 
 # Other Authors - here you can add Other authors. For example Natali_Braxton
 authors:
