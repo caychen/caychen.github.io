@@ -5,6 +5,7 @@
 layout: default
 ---
 {% include hero.html %}
+<!-- 去除订阅 -->
 <!-- {% include info-box.html %} -->
 
 {% if paginator.page %}
@@ -29,8 +30,8 @@ layout: default
               <div class="author-image-small" style="background-image: url({{"/images/" | prepend: site.baseurl | append: site.author-image}})"></div>
             </div>
             <div class="author-info">
-              <span class="meta">Date: <time datetime="{{ post.date | date_to_xmlschema }}">{% assign date_format = site.minima.date_format | default: "%B %-d, %Y" %}{{ post.date | date: date_format }}</time></span><br>
-              <span>Author: {{ site.author-name }}</span>
+              <span class="meta">时间: <time datetime="{{ post.date | date_to_xmlschema }}">{% assign date_format = site.minima.date_format | default: "%Y/%m/%d" %}{{ post.date | date: date_format }}</time></span><br>
+              <span>作者: {{ site.author-name }}</span>
             </div>
           </div>
           <div class="cover"></div>
