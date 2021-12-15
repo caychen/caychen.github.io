@@ -6,9 +6,10 @@
 
       <nav class="site-nav">
         {% for page in site.pages %}
-          {% unless page.name == 'tags.html' or page.name == '404.html' %}
+        <p>------------{{page}}------------</p>
+          {% unless page.name == '404.html' %}
             {% if page.title %}
-              <a href='{{ page.url | prepend: site.baseurl }}'>{{ page.title }}</a>
+              <a href='{{ page.url | prepend: site.baseurl }}'>{{ page.zh_name }}</a>
             {% endif %}
           {% endunless %}
         {% endfor %}
