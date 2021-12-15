@@ -1,0 +1,606 @@
+
+
+[TOC]
+
+# 1、Docker安装
+
+[Docker Hub](https://docs.docker.com/engine/install/centos/)
+
+## 1.1、Docker安装必要软件/插件
+
+（1）、卸载旧版本
+```text
+sudo yum -y remove docker \
+                  docker-client \
+                  docker-client-latest \
+                  docker-common \
+                  docker-latest \
+                  docker-latest-logrotate \
+                  docker-logrotate \
+                  docker-engine
+```
+
+（2）、设置仓库
+```text
+sudo yum install -y yum-utils
+```
+
+```
+# 官方源
+sudo yum-config-manager \
+    --add-repo \
+    https://download.docker.com/linux/centos/docker-ce.repo
+    
+# 阿里云源
+sudo yum-config-manager \
+    --add-repo \
+    http://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo
+    
+# 清华源
+sudo yum-config-manager \
+    --add-repo \
+    https://mirrors.tuna.tsinghua.edu.cn/docker-ce/linux/centos/docker-ce.repo
+```
+
+（3）、安装 Docker CE
+```text
+sudo yum -y install docker-ce docker-ce-cli containerd.io
+```
+
+
+
+## 1.2、Docker常用命令
+
+### 1.2.1、docker基础命令
+
+#### 1.2.1.1、docker启动
+
+```text
+systemctl start docker
+```
+
+#### 1.2.1.2、docker停止
+
+```text
+systemctl stop docker
+```
+
+#### 1.2.1.3、docker运行状态
+
+```text
+systemctl status docker
+```
+
+#### 1.2.1.4、docker自启动，随系统启动而自启动
+
+```text
+systemctl enable docker
+```
+
+#### 1.2.1.5、docker重启
+
+```text
+systemctl restart docker
+```
+
+#### 1.2.1.6、docker的client和server版本信息
+
+```text
+docker version
+```
+
+#### 1.2.1.7、docker简易版本
+
+```text
+docker -v
+```
+
+#### 1.2.1.8、docker详细信息
+
+```text
+docker info
+```
+
+#### 1.2.1.9、docker帮助命令
+
+```text
+docker --help
+
+如果要查看docker具体命令的帮助，使用如下
+docker [command] --help
+比如： docker ps --help
+```
+
+
+
+### 1.2.2、docker镜像命令
+
+#### 1.2.2.1、docker镜像列表(images)
+```text
+docker images
+```
+
+#### 1.2.2.2、搜索镜像(search)
+```text
+docker search 镜像名
+```
+
+#### 1.2.2.3、过滤搜索 (search --filter)
+```text
+# 搜索STARS >9000的 mysql 镜像
+docker search --filter=STARS=9000 mysql
+```
+
+#### 1.2.2.4、拉取镜像(pull)
+```text
+# tag不写默认为latest
+docker pull 镜像名[:tag名]
+```
+
+#### 1.2.2.5、运行镜像(run)
+```text
+docker run 镜像名[:tag]
+```
+
+#### 1.2.2.6、删除镜像(rmi)
+```text
+# 支持一个或者多个， -f 表示强制
+docker rmi -f 镜像名1/镜像ID1 镜像名2/镜像ID2 镜像名3/镜像ID3 ...
+
+options:
+	-f :强制删除
+	--no-prune :不移除该镜像的过程镜像，默认移除
+```
+
+#### 1.2.2.7、删除全部镜像(rmi)
+```text
+# -a 意思为显示全部, -q 意思为只显示ID
+docker rmi -f $(docker images -aq)
+```
+
+#### 1.2.2.8、保存镜像(save)
+```text
+docker save 镜像名/镜像ID[镜像名2/镜像ID2 ...] -o 镜像保存的文件路径
+如：
+docker save tomcat -o /xx/tomcat.tar
+```
+
+#### 1.2.2.9、加载镜像/恢复镜像(load)
+```text
+docker load -i 镜像保存的文件路径
+如：
+docker load -i /xx/tomcat.tar
+```
+
+#### 1.2.2.10、创建本地镜像(build)
+
+```text
+docker build -t 镜像名称:标签名 -f Dockerfile存放路径 . 
+PS: 最后面的点(.)不能去掉，表示的是镜像构建时打包上传到Docker引擎中的文件的目录,而不是本机目录。
+如：
+docker build -t caychen-docker-demo:v1.0 -f Dockerfile .
+
+常用options:
+	-f :指定要使用的Dockerfile路径；
+	-t :镜像的名字及标签，通常 name:tag 或者 name 格式；可以在一次构建中为一个镜像设置多个标签。
+```
+
+#### 1.2.2.11、标记本地镜像(tag)
+
+```text
+docker tag IMAGE[:TAG] [REGISTRYHOST/][USERNAME/]NAME[:TAG]
+如：
+docker tag caychen-docker-demo:v1.0 caychen/caychen-docker-demo:v2.0
+```
+
+该命令常用作需要将本地的docker镜像上传至dockerhub或者其他docker仓库的时候使用，需要使用该命令将本地的镜像打成符合docker仓库要求的格式，如上面的例子：caychen/caychen-docker-demo:v1，其中斜杠前面的caychen表示的是dockerhub使用的账户名，后面的caychen-docker-demo的是dockerhub的仓库名，v2.0是镜像标签。
+
+#### 1.2.2.12、从容器创建新的镜像(commit)
+
+```text
+docker commit [选项] 容器镜像ID[非镜像名, 需要docker ps返回的容器id] 新的镜像名[:新的标签名]
+
+常用options:
+	-a: 提交的镜像作者；
+	-c :使用Dockerfile指令来创建镜像；
+	-m :提交时的说明文字；
+	-p :在commit时，将容器暂停。
+
+如：
+1、docker ps
+返回
+CONTAINER ID   IMAGE  						NAMES
+2001c610816b   caychen-docker-demo:v1.0  	caychen-docker-demo
+91ae996c70fc   rabbitmq:management        	rabbitmq
+8dca6c317428   kibana:7.14.1              	kibana
+193642606baa   elasticsearch:7.14.1       	elasticsearch
+3fb7f45ea081   mysql                      	mysql8
+5c4badfa0e98   redis                      	redis                                     
+
+2、使用caychen-docker-demo:v1.0的镜像id：2001c610816b
+docker commit -a "caychen" -m "commit new container" 2001c610816b  caychen/caychen-docker-demo:v4 
+
+3、再使用docker images查看列表
+REPOSITORY                    TAG          IMAGE ID       CREATED             SIZE
+caychen/caychen-docker-demo   v4           14198436aedd   6 minutes ago       676MB
+caychen-docker-demo           v1.0         971cc7e07ea8   About an hour ago   676MB
+caychen/caychen-docker-demo   v1.0         971cc7e07ea8   About an hour ago   676MB
+caychen/caychen-docker-demo   v2.0         971cc7e07ea8   About an hour ago   676MB
+openjdk                       11           0719902862f3   8 days ago          659MB
+rabbitmq                      management   719c9819aae8   6 weeks ago         253MB
+redis                         latest       02c7f2054405   3 months ago        105MB
+mysql                         latest       0716d6ebcc1a   3 months ago        514MB
+elasticsearch                 7.14.1       f287f2cfc393   3 months ago        1.04GB
+kibana                        7.14.1       a8e5c899ba05   3 months ago        1.29GB
+```
+
+tag和commit命令的区别在于：
+
+* tag是使用镜像直接复制一个，实质上镜像ID是同一个，只是修改了标签或者镜像名；
+* commit是使用容器中的镜像来复制并创建一个新的镜像，其镜像ID已经发生了变化；
+
+#### 1.2.2.13、登陆/登出docker镜像仓库(login/logout)
+
+```text
+docker login/logout [OPTIONS] [SERVER]
+
+OPTIONS说明：
+	-u :登陆的用户名
+	-p :登陆的密码
+
+如果未指定镜像仓库地址，默认为官方仓库 Docker Hub，其他镜像仓库详见具体的官方文档。
+```
+
+#### 1.2.2.14、推送镜像(push)
+
+```text
+docker push 镜像名[:镜像标签名]
+如：
+docker push caychen/caychen-docker-demo:v1.0
+
+将本地的镜像上传到镜像仓库,要先登陆到镜像仓库。推送的镜像必须按照指定格式才行。
+```
+
+![](./images/上传镜像到dockerhub.png)
+
+
+
+### 1.2.3、docker容器命令
+
+#### 1.2.3.1、查看正在运行容器列表(ps)
+```text
+docker ps
+```
+
+#### 1.2.3.2、查看所有容器，包含正在运行 和已停止的(ps -a)
+```text
+docker ps -a
+```
+
+#### 1.2.3.3、启动容器(重点:run)
+```text
+docker run xxx
+
+OPTIONS说明：
+    -a stdin: 指定标准输入输出内容类型，可选 STDIN/STDOUT/STDERR 三项；
+    -d: 后台运行容器，并返回容器ID；
+    -i: 以交互模式运行容器，通常与 -t 同时使用；
+    -P: 随机端口映射，容器内部端口随机映射到主机的端口
+    -p: 指定端口映射，格式为：主机(宿主)端口:容器端口
+    -t: 为容器重新分配一个伪输入终端，通常与 -i 同时使用；
+    --name "容器名称": 为容器指定一个名称；
+    --dns 8.8.8.8: 指定容器使用的DNS服务器，默认和宿主一致；
+    --dns-search example.com: 指定容器DNS搜索域名，默认和宿主一致；
+    -h "mars": 指定容器的hostname；
+    -e username="ritchie": 设置环境变量；
+    --env-file=[]: 从指定文件读入环境变量；
+    --cpuset="0-2" or --cpuset="0,1,2": 绑定容器到指定CPU运行；
+    -m :设置容器使用内存最大值；
+    --net="bridge": 指定容器的网络连接类型，支持 bridge/host/none/container: 四种类型；
+    --link=[]: 添加链接到另一个容器；
+    --expose=[]: 开放一个端口或一组端口；
+    --volume , -v: 绑定一个映射卷
+```
+
+#### 1.2.3.4、停止容器(stop)
+```text
+docker stop 容器名/容器ID
+```
+
+#### 1.2.3.5、重启容器(restart)
+```text
+docker restart 容器ID/容器名
+```
+
+#### 1.2.3.6、kill容器(kill)
+```text
+docker kill 容器ID/容器名
+```
+
+#### 1.2.3.7、删除一个容器(rm)
+```text
+docker rm -f 容器名/容器ID
+```
+
+#### 1.2.3.8、删除多个容器(rm)
+```text
+docker rm -f 容器名1/容器ID1 容器名2/容器ID2 容器名3/容器ID3
+```
+
+#### 1.2.3.9、删除全部容器(rm)
+```text
+docker rm -f $(docker ps -aq)
+```
+
+#### 1.2.3.10、进入容器方式一（exec，推荐）
+```text
+docker exec -it 容器名/容器ID /bin/bash
+```
+
+#### 1.2.3.11、进入容器方式二（attach）
+```text
+docker attach 容器名/容器ID
+```
+
+#### 1.2.3.12、从容器内拷出(cp)
+```text
+docker cp 容器ID/名称:容器内路径  容器外路径
+如：
+docker cp redis:/etc/redis/redis.conf  $PWD/
+```
+
+#### 1.2.3.13、从外部拷贝文件到容器内(cp)
+```text
+docker cp 容器外路径 容器ID/名称:容器内路径
+如:
+docker cp $PWD/redis.conf redis:/etc/redis/redis.conf
+```
+
+#### 1.2.3.14、查看容器日志(logs)
+```text
+docker logs 容器id
+
+OPTIONS说明：
+    -f/--follow : 跟踪日志输出
+    --since :显示某个开始时间的日志
+    -n/--util :显示某个截至时间的日志
+    -t/--timestamp : 显示时间戳
+    --tail :仅列出最新N条容器日志
+```
+
+#### 1.2.3.15、修改启动的容器自启动(update)
+
+```text
+docker container update --restart=always 容器Id:容器名
+```
+
+#### 1.2.3.16、暂停容器(pause)
+
+```text
+docker pause 容器 [容器...]
+```
+
+#### 1.2.3.17、恢复容器(unpause)
+
+```text
+docker unpause 容器 [容器...]
+```
+
+#### 1.2.3.18、创建容器但不启动(create)
+
+```text
+语法同docker run
+docker create --name 容器名 镜像ID
+```
+
+#### 1.2.3.19、查看容器内部详情细节(inspect)
+
+```text
+docker inspect 容器ID/容器名   
+```
+
+#### 1.2.3.20、查看容器中运行的进程信息(top)
+
+```text
+docker top 容器ID/容器名
+```
+
+#### 1.2.3.21、查看端口(port)
+
+```text
+docker port 容器ID/容器名
+```
+
+
+
+## 1.3、镜像加速
+
+```text
+使用阿里云加速器
+```
+
+
+
+# 2、Docker安装Mysql8
+
+```text
+docker pull mysql
+```
+
+新建mysql的映射目录（我放在/home/caychen/docker/mysql8）
+
+```text
+mkdir -p data
+mkdir -p logs
+mkdir -p mysql-files
+```
+
+新增配置文件my.cnf
+
+```properties
+[[client]
+port=3306
+#socket = /usr/mysql/mysqld.sock
+
+default-character-set = utf8mb4
+
+[mysqld]
+server-id=1
+log-bin=mysql-bin
+
+character_set_server=utf8mb4
+collation_server = utf8mb4_bin
+
+secure-file-priv= NULL
+
+# Disabling symbolic-links is recommended to prevent assorted security risks
+symbolic-links=0
+#
+# # Custom config should go here
+#
+!includedir /etc/mysql/conf.d/
+
+pid-file        = /var/run/mysqld/mysqld.pid
+socket          = /var/run/mysqld/mysqld.sock
+datadir         = /var/lib/mysql
+```
+
+在mysql8目录下执行如下命令：
+
+```text
+docker run \
+	--restart=always \
+	-p 3307:3306 \
+	-v $PWD/my.cnf:/etc/mysql/my.cnf \
+	-v $PWD/logs:/var/log/mysql \
+	-v $PWD/data:/var/lib/mysql \
+    -v $PWD/mysql-files:/var/lib/mysql-files \
+    --name mysql8 \
+    --privileged=true \
+    -e MYSQL_ROOT_PASSWORD=admin
+    -d mysql
+```
+
+进入docker容器修改mysql8的root密码：
+
+```text
+# 进入mysql 容器
+docker exec -it mysql8 bash
+
+# 进入mysql
+mysql -uroot -p
+
+# 输入原本设置的密码root
+# 修改远程登录root密码
+ALTER USER 'root'@'%' IDENTIFIED WITH mysql_native_password BY '新密码';
+
+# 修改登录权限（用于远程登录）
+grant all privileges on *.* to 'root'@'%' with grant option;
+
+# 刷新数据库
+flush privileges;
+
+# 退出数据库
+exit
+
+# 退出容器
+exit
+```
+
+
+
+# 3、Docker安装Redis
+
+```text
+不选tag名，默认为latest
+docker pull redis[:tag] 
+```
+
+
+
+在本地目录新建一个redis.conf的Redis配置文件
+
+```text
+# 持久化
+appendonly yes
+
+# 是否需要密码
+requirepass 密码
+
+# ... 其他
+```
+
+
+
+执行如下命令
+
+```text
+docker run \
+	--restart=always \
+	--name redis \
+	-p 6379:6379 \
+	-v $PWD/redis.conf:/etc/local/redis/redis.conf \
+	-v $PWD/data:/etc/local/redis/data \
+	-d redis \
+	redis-server /etc/local/redis/redis.conf
+```
+
+
+
+# 4、Docker安装Elasticsearch
+
+修改vm配置，否则es启动不了
+
+```text
+sysctl -w vm.max_map_count=262144
+```
+
+本地目录配置映射
+
+```text
+mkdir config data plugins
+```
+
+新增修改
+
+启动elasticsearch
+
+```text
+# 拉取elasticsearch
+docker pull elasticsearch:7.14.1
+
+# 启动（单节点）
+docker run \
+	-p 9200:9200 -p 9300:9300 \
+	-e "discovery.type=single-node" \
+	-e ES_JAVA_OPTS="-Xms512m -Xmx512m" \
+	-v $PWD/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml \
+	-v $PWD/data:/usr/share/elasticsearch/data \
+	-v $PWD/plugins:/usr/share/elasticsearch/plugins \
+	--name elasticsearch \
+    -d elasticsearch:7.14.1
+```
+
+访问：http://ip:9200/，会出现如下图：![](./images/elasticsearch启动之后信息.png)
+
+
+
+# 5、Docker 安装Kibana
+
+```text
+ docker run --name kibana -e "ELASTICSEARCH_HOSTS=es实际ip地址:9200" -p 5601:5601 -d kibana:7.14.1
+```
+
+
+
+# 6、Docker安装RabbitMQ
+
+```text
+# management版本自带web管理页面
+docker pull rabbitmq:management
+
+docker run -d --name rabbitmq  -p 5672:5672 -p 15672:15672 --hostname caychen-rabbitmq rabbitmq:management
+
+docker update rabbitmq --restart=always
+```
+
