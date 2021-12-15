@@ -1,35 +1,23 @@
 # Site settings
 title: Caychen
-description: Lokmont is a responsive simple theme for Jekyll.
+description: 一名菜鸟级别的攻城狮！！！
 baseurl: "" # the subpath of your site, e.g. /blog
-url: "https://lokmont-jekyll.netlify.com/" # the base hostname & protocol for your site, e.g. http://example.com
+url: "https://caychen.github.io/" # the base hostname & protocol for your site, e.g. http://example.com
 
 # Banner Section
 hero: 112.jpg
-hero-title: Welcome to Lokmont
+hero-title: Welcome to Caychen
 hero-description: A Responsive Jekyll Blog Theme. Theme suitable for any kind of creators.
 
 # Author - Creator
 author-name: Caychen
 author-image: 10.jpg
-about-author: 我的英文名Caychen。我是个菜菜的程序员。
+about-author: 我的英文名Caychen,只是一名菜鸟级别的攻城狮！！！
 author-email: caychen@aliyun.com
 author-github: https://www.github.com/caychen
 author-gitee: https://www.gitee.com/caychen
 author-csdn: https://www.blog.csdn.net/caychen
 author-jianshu: https://www.jianshu.com/u/c64d133ef703
-
-# Other Authors - here you can add Other authors. For example Natali_Braxton
-authors:
-  Natali_Braxton:
-    author-name: Natali Braxton
-    author-image: 111.jpg
-    about-author: My name is Natali Braxton. I love walking, I play the guitar in my spare time. And also write articles about different technologies.
-    author-email: natali.example@gmail.com
-    author-twitter: https://twitter.com/
-    author-facebook: https://twitter.com/
-    author-instagram: https://www.instagram.com/
-    author-pinterest: https://pinterest.com/
 
 # Social Media Links (Links are located in hero and footer)
 email: caychen@aliyun.com
