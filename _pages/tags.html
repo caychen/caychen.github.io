@@ -3,6 +3,7 @@ layout: page
 title: Tags in Blog
 image: 20.jpg
 permalink: /tags/
+zh_name: 分类
 ---
 {% capture site_tags %}{% for tag in site.tags %}{{ tag | first }}{% unless forloop.last %},{% endunless %}{% endfor %}{% endcapture %}
 {% assign tag_words = site_tags | split:',' | sort %}
