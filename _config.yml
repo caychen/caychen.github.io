@@ -1,18 +1,18 @@
 # Site settings
 title: Caychen
-description: 一名菜鸟级别的攻城狮！！！
+description: 只是万万千千程序猿中的一只小菜鸟，喜欢学习编程，喜欢探索新技术！！！
 baseurl: "" # the subpath of your site, e.g. /blog
 url: "https://caychen.github.io/" # the base hostname & protocol for your site, e.g. http://example.com
 
 # Banner Section
 hero: 112.jpg
-hero-title: Welcome to Caychen
-hero-description: A Responsive Jekyll Blog Theme. Theme suitable for any kind of creators.
+hero-title: Welcome
+hero-description: 喜欢学习编程，喜欢探索新技术
 
 # Author - Creator
 author-name: Caychen
 author-image: 10.jpg
-about-author: 我的英文名是Caychen，只是一名菜鸟级别的攻城狮！！！
+about-author: 我的英文名是Caychen，只是万万千千程序猿中的一只小菜鸟，喜欢学习编程，喜欢探索新技术！！！
 author-email: caychen@aliyun.com
 author-github: https://www.github.com/caychen
 author-gitee: https://www.gitee.com/caychen

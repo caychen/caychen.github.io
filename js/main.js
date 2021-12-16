@@ -86,7 +86,7 @@ $(function() {
     var nextPage = parseInt($postsContainer.attr("data-page")) + 1;
     var totalPages = parseInt($postsContainer.attr("data-totalPages"));
 
-    $(this).addClass("is-loading").text("Loading...");
+    $(this).addClass("is-loading").text("加载中...");
 
     $.get("/page/" + nextPage, function(data) {
       var htmlData = $.parseHTML(data);
