@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  Organization tip of the day
-date:   2017-10-27 10:12:27 +0300
+date:   2017-10-09 10:12:27 +0300
 img: 7.jpg
 tags: [Tips, Creative]
 ---
