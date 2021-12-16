@@ -1840,14 +1840,14 @@ table tr:hover {
   padding: 5px 7px;
   font-size: 14px;
   color: #ffffff;
-  background-color: #bbc3cb;
+  background-color: #e7245a;
   -webkit-transition: all .25s ease;
   -o-transition: all .25s ease;
   transition: all .25s ease;
 }
 
 .blog-tags .tags li a:hover {
-  background-color: #a3acb5;
+  background-color: #3f89d3;
 }
 
 .blog-tags h2 {

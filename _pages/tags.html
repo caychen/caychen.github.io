@@ -1,9 +1,9 @@
 ---
 layout: page
-title: Tags in Blog
+title: 标签分类
 image: 20.jpg
 permalink: /tags/
-zh_name: 分类
+zh_name: 标签
 ---
 {% capture site_tags %}{% for tag in site.tags %}{{ tag | first }}{% unless forloop.last %},{% endunless %}{% endfor %}{% endcapture %}
 {% assign tag_words = site_tags | split:',' | sort %}
