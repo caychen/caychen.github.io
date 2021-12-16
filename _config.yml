@@ -14,6 +14,7 @@ author-name: Caychen
 author-image: 10.jpg
 about-author: 我的英文名是Caychen，只是万万千千程序猿中的一只小菜鸟，喜欢学习编程，喜欢探索新技术！！！
 author-email: caychen@aliyun.com
+formspree-email: https://formspree.io/f/xyyoybnv
 author-github: https://www.github.com/caychen
 author-gitee: https://www.gitee.com/caychen
 author-csdn: https://www.blog.csdn.net/caychen
@@ -30,7 +31,7 @@ pinterest: https://pinterest.com/
 youtube: https://www.youtube.com/
 
 # Contact Form Settings
-contact-subtitle: Pok pok listicle meggings, gluten-free deep v you probably haven't heard of them taxidermy iPhone gentrify seitan. Kogi cornhole enamel. # Title for the subscription form.
+contact-subtitle: 如果有任何想法，欢迎给我留言。
 
 # Google Analytics
 google-analytics: # Add your identifier. For example UA-99631805-1.

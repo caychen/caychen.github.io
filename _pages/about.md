@@ -1,6 +1,6 @@
 ---
 layout: page
-title: About
+title: 关于我
 image: 12.jpg
 zh_name: 关于
 ---
