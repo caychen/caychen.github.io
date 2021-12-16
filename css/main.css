@@ -1848,6 +1848,7 @@ table tr:hover {
 
 .blog-tags .tags li a:hover {
   background-color: #3f89d3;
+  font-style: bold;
 }
 
 .blog-tags h2 {
