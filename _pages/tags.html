@@ -22,7 +22,7 @@ zh_name: 标签
     {% for post in site.tags[this_word] %}{% if post.title != null %}
     <div class="tag-list">
         <span><a href="{{ post.url }}">{{ post.title }}</a></span>
-        <small><span>| <time datetime="{{ page.date | date_to_xmlschema }}">{{ post.date | date_format }}</time></span></small>
+        <small><span>| <time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: date_format }}</time></span></small>
     </div>
     {% endif %}{% endfor %}
   {% endunless %}{% endfor %}
