@@ -1604,7 +1604,7 @@ table tr:hover {
   position: fixed;
   bottom: 20px;
   color: #666;
-  font-size: 21px;
+  font-size: 40px;
   text-align: center;
   cursor: pointer;
   -webkit-transition: all .25s ease;
