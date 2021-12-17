@@ -6,7 +6,7 @@ url: "https://caychen.github.io/" # the base hostname & protocol for your site, 
 
 # Banner Section
 hero: 112.jpg
-hero-title: Welcome
+hero-title: '<span style="color: red;">❤ </span>Welcome<span style="color: blue;"> ❤</span>'
 hero-description: 改变世界 or 改变自己
 
 # Author - Creator
