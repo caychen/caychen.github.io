@@ -1,118 +1,292 @@
 /**
  * Copyright (c) 2016 hustcc
  * License: MIT
- * Version: v1.0.1
+ * Version: v2.0.4
  * GitHub: https://github.com/hustcc/canvas-nest.js
 **/
+
 ! function() {
-  //封装方法，压缩之后减少文件大小
-  function get_attribute(node, attr, default_value) {
-    return node.getAttribute(attr) || default_value;
-  }
-  //封装方法，压缩之后减少文件大小
-  function get_by_tagname(name) {
-    return document.getElementsByTagName(name);
-  }
-  //获取配置参数
-  function get_config_option() {
-    var scripts = get_by_tagname("script"),
-      script_len = scripts.length,
-      script = scripts[script_len - 1]; //当前加载的script
-    return {
-      l: script_len, //长度，用于生成id用
-      z: get_attribute(script, "zIndex", -1), //z-index
-      o: get_attribute(script, "opacity", 0.5), //opacity
-      c: get_attribute(script, "color", "0,0,0"), //color
-      n: get_attribute(script, "count", 99) //count
-    };
-  }
-  //设置canvas的高宽
-  function set_canvas_size() {
-    canvas_width = the_canvas.width = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth, 
-    canvas_height = the_canvas.height = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
-  }
+    "use strict";
 
-  //绘制过程
-  function draw_canvas() {
-    context.clearRect(0, 0, canvas_width, canvas_height);
-    //随机的线条和当前位置联合数组
-    var e, i, d, x_dist, y_dist, dist; //临时节点
-    //遍历处理每一个点
-    random_points.forEach(function(r, idx) {
-      r.x += r.xa, 
-      r.y += r.ya, //移动
-      r.xa *= r.x > canvas_width || r.x < 0 ? -1 : 1, 
-      r.ya *= r.y > canvas_height || r.y < 0 ? -1 : 1, //碰到边界，反向反弹
-      context.fillRect(r.x - 0.5, r.y - 0.5, 1, 1); //绘制一个宽高为1的点
-      //从下一个点开始
-      for (i = idx + 1; i < all_array.length; i++) {
-        e = all_array[i];
-        // 当前点存在
-        if (null !== e.x && null !== e.y) {
-          x_dist = r.x - e.x; //x轴距离 l
-          y_dist = r.y - e.y; //y轴距离 n
-          dist = x_dist * x_dist + y_dist * y_dist; //总距离, m
+    function e(e) {
+        return e && e.__esModule && Object.prototype.hasOwnProperty.call(e, "default") ? e.default : e
+    }
 
-          dist < e.max && (e === current_point && dist >= e.max / 2 && (r.x -= 0.03 * x_dist, r.y -= 0.03 * y_dist), //靠近的时候加速
-            d = (e.max - dist) / e.max,
-            context.beginPath(),
-            context.lineWidth = d / 2,
-            context.strokeStyle = "rgba(" + config.c + "," + (d + 0.2) + ")",
-            context.moveTo(r.x, r.y),
-            context.lineTo(e.x, e.y),
-            context.stroke());
-        }
-      }
-    }), frame_func(draw_canvas);
-  }
-  //创建画布，并添加到body中
-  var the_canvas = document.createElement("canvas"), //画布
-    config = get_config_option(), //配置
-    canvas_id = "c_n" + config.l, //canvas id
-    context = the_canvas.getContext("2d"), canvas_width, canvas_height, 
-    frame_func = window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame || window.oRequestAnimationFrame || window.msRequestAnimationFrame || function(func) {
-      window.setTimeout(func, 1000 / 45);
-    }, random = Math.random, 
-    current_point = {
-      x: null, //当前鼠标x
-      y: null, //当前鼠标y
-      max: 20000 // 圈半径的平方
-    },
-    all_array;
-  the_canvas.id = canvas_id;
-  the_canvas.style.cssText = "position:fixed;top:0;left:0;z-index:" + config.z + ";opacity:" + config.o;
-  get_by_tagname("body")[0].appendChild(the_canvas);
-
-  //初始化画布大小
-  set_canvas_size();
-  window.onresize = set_canvas_size;
-  //当时鼠标位置存储，离开的时候，释放当前位置信息
-  window.onmousemove = function(e) {
-    e = e || window.event;
-    current_point.x = e.clientX;
-    current_point.y = e.clientY;
-  }, window.onmouseout = function() {
-    current_point.x = null;
-    current_point.y = null;
-  };
-  //随机生成config.n条线位置信息
-  for (var random_points = [], i = 0; config.n > i; i++) {
-    var x = random() * canvas_width, //随机位置
-      y = random() * canvas_height,
-      xa = 2 * random() - 1, //随机运动方向
-      ya = 2 * random() - 1;
-    // 随机点
-    random_points.push({
-      x: x,
-      y: y,
-      xa: xa,
-      ya: ya,
-      max: 6000 //沾附距离
+    function t(e, t) {
+        return e(t = {
+            exports: {}
+        }, t.exports), t.exports
+    }
+    var n = t(function(e, t) {
+        Object.defineProperty(t, "__esModule", {
+            value: !0
+        });
+        var n = 1;
+        t.default = function() {
+            return "" + n++
+        }, e.exports = t.default
     });
-  }
-  all_array = random_points.concat([current_point]);
-  //0.1秒后绘制
-  setTimeout(function() {
-    draw_canvas();
-  }, 100);
+    e(n);
+    var o = t(function(e, t) {
+        Object.defineProperty(t, "__esModule", {
+            value: !0
+        }), t.default = function(e) {
+            var t = arguments.length > 1 && void 0 !== arguments[1] ? arguments[1] : 30,
+                n = null;
+            return function() {
+                for (var o = this, i = arguments.length, r = Array(i), a = 0; a < i; a++) r[a] = arguments[a];
+                clearTimeout(n), n = setTimeout(function() {
+                    e.apply(o, r)
+                }, t)
+            }
+        }, e.exports = t.default
+    });
+    e(o);
+    var i = t(function(e, t) {
+        Object.defineProperty(t, "__esModule", {
+            value: !0
+        });
+        t.SizeSensorId = "size-sensor-id", t.SensorStyle = "display:block;position:absolute;top:0;left:0;height:100%;width:100%;overflow:hidden;pointer-events:none;z-index:-1;opacity:0", t.SensorClassName = "size-sensor-object"
+    });
+    e(i);
+    i.SizeSensorId, i.SensorStyle, i.SensorClassName;
+    var r = t(function(e, t) {
+        Object.defineProperty(t, "__esModule", {
+            value: !0
+        }), t.createSensor = void 0;
+        var n, r = (n = o) && n.__esModule ? n : {
+            default: n
+        };
+        t.createSensor = function(e) {
+            var t = void 0,
+                n = [],
+                o = (0, r.default)(function() {
+                    n.forEach(function(t) {
+                        t(e)
+                    })
+                }),
+                a = function() {
+                    t && t.parentNode && (t.contentDocument.defaultView.removeEventListener("resize", o), t.parentNode.removeChild(t), t = void 0, n = [])
+                };
+            return {
+                element: e,
+                bind: function(r) {
+                    t || (t = function() {
+                        "static" === getComputedStyle(e).position && (e.style.position = "relative");
+                        var t = document.createElement("object");
+                        return t.onload = function() {
+                            t.contentDocument.defaultView.addEventListener("resize", o), o()
+                        }, t.setAttribute("style", i.SensorStyle), t.setAttribute("class", i.SensorClassName), t.type = "text/html", e.appendChild(t), t.data = "about:blank", t
+                    }()), -1 === n.indexOf(r) && n.push(r)
+                },
+                destroy: a,
+                unbind: function(e) {
+                    var o = n.indexOf(e); - 1 !== o && n.splice(o, 1), 0 === n.length && t && a()
+                }
+            }
+        }
+    });
+    e(r);
+    r.createSensor;
+    var a = t(function(e, t) {
+        Object.defineProperty(t, "__esModule", {
+            value: !0
+        }), t.createSensor = void 0;
+        var n, i = (n = o) && n.__esModule ? n : {
+            default: n
+        };
+        t.createSensor = function(e) {
+            var t = void 0,
+                n = [],
+                o = (0, i.default)(function() {
+                    n.forEach(function(t) {
+                        t(e)
+                    })
+                }),
+                r = function() {
+                    t.disconnect(), n = [], t = void 0
+                };
+            return {
+                element: e,
+                bind: function(i) {
+                    t || (t = function() {
+                        var t = new ResizeObserver(o);
+                        return t.observe(e), o(), t
+                    }()), -1 === n.indexOf(i) && n.push(i)
+                },
+                destroy: r,
+                unbind: function(e) {
+                    var o = n.indexOf(e); - 1 !== o && n.splice(o, 1), 0 === n.length && t && r()
+                }
+            }
+        }
+    });
+    e(a);
+    a.createSensor;
+    var s = t(function(e, t) {
+        Object.defineProperty(t, "__esModule", {
+            value: !0
+        }), t.createSensor = void 0;
+        t.createSensor = "undefined" != typeof ResizeObserver ? a.createSensor : r.createSensor
+    });
+    e(s);
+    s.createSensor;
+    var u = t(function(e, t) {
+        Object.defineProperty(t, "__esModule", {
+            value: !0
+        }), t.removeSensor = t.getSensor = void 0;
+        var o, r = (o = n) && o.__esModule ? o : {
+            default: o
+        };
+        var a = {};
+        t.getSensor = function(e) {
+            var t = e.getAttribute(i.SizeSensorId);
+            if (t && a[t]) return a[t];
+            var n = (0, r.default)();
+            e.setAttribute(i.SizeSensorId, n);
+            var o = (0, s.createSensor)(e);
+            return a[n] = o, o
+        }, t.removeSensor = function(e) {
+            var t = e.element.getAttribute(i.SizeSensorId);
+            e.element.removeAttribute(i.SizeSensorId), e.destroy(), t && a[t] && delete a[t]
+        }
+    });
+    e(u);
+    u.removeSensor, u.getSensor;
+    var c = t(function(e, t) {
+        Object.defineProperty(t, "__esModule", {
+            value: !0
+        }), t.clear = t.bind = void 0;
+        t.bind = function(e, t) {
+            var n = (0, u.getSensor)(e);
+            return n.bind(t),
+                function() {
+                    n.unbind(t)
+                }
+        }, t.clear = function(e) {
+            var t = (0, u.getSensor)(e);
+            (0, u.removeSensor)(t)
+        }
+    });
+    e(c);
+    var l = c.clear,
+        d = c.bind,
+        v = window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame || window.msRequestAnimationFrame || window.oRequestAnimationFrame || function(e) {
+            return window.setTimeout(e, 1e3 / 60)
+        },
+        f = window.cancelAnimationFrame || window.webkitCancelAnimationFrame || window.mozCancelAnimationFrame || window.msCancelAnimationFrame || window.oCancelAnimationFrame || window.clearTimeout,
+        m = function(e) {
+            return new Array(e).fill(0).map(function(e, t) {
+                return t
+            })
+        },
+        h = Object.assign || function(e) {
+            for (var t = 1; t < arguments.length; t++) {
+                var n = arguments[t];
+                for (var o in n) Object.prototype.hasOwnProperty.call(n, o) && (e[o] = n[o])
+            }
+            return e
+        },
+        p = function() {
+            function e(e, t) {
+                for (var n = 0; n < t.length; n++) {
+                    var o = t[n];
+                    o.enumerable = o.enumerable || !1, o.configurable = !0, "value" in o && (o.writable = !0), Object.defineProperty(e, o.key, o)
+                }
+            }
+            return function(t, n, o) {
+                return n && e(t.prototype, n), o && e(t, o), t
+            }
+        }();
+    var y = function() {
+        function e(t, n) {
+            var o = this;
+            ! function(e, t) {
+                if (!(e instanceof t)) throw new TypeError("Cannot call a class as a function")
+            }(this, e), this.randomPoints = function() {
+                return m(o.c.count).map(function() {
+                    return {
+                        x: Math.random() * o.canvas.width,
+                        y: Math.random() * o.canvas.height,
+                        xa: 2 * Math.random() - 1,
+                        ya: 2 * Math.random() - 1,
+                        max: 6e3
+                    }
+                })
+            }, this.el = t, this.c = h({
+                zIndex: -1,
+                opacity: .5,
+                color: "0,0,0",
+                pointColor: "0,0,0",
+                count: 99
+            }, n), this.canvas = this.newCanvas(), this.context = this.canvas.getContext("2d"), this.points = this.randomPoints(), this.current = {
+                x: null,
+                y: null,
+                max: 2e4
+            }, this.all = this.points.concat([this.current]), this.bindEvent(), this.requestFrame(this.drawCanvas)
+        }
+        return p(e, [{
+            key: "bindEvent",
+            value: function() {
+                var e = this;
+                d(this.el, function() {
+                    e.canvas.width = e.el.clientWidth, e.canvas.height = e.el.clientHeight
+                }), this.onmousemove = window.onmousemove, window.onmousemove = function(t) {
+                    e.current.x = t.clientX - e.el.offsetLeft + document.scrollingElement.scrollLeft, e.current.y = t.clientY - e.el.offsetTop + document.scrollingElement.scrollTop, e.onmousemove && e.onmousemove(t)
+                }, this.onmouseout = window.onmouseout, window.onmouseout = function() {
+                    e.current.x = null, e.current.y = null, e.onmouseout && e.onmouseout()
+                }
+            }
+        }, {
+            key: "newCanvas",
+            value: function() {
+                "static" === getComputedStyle(this.el).position && (this.el.style.position = "relative");
+                var e, t = document.createElement("canvas");
+                return t.style.cssText = "display:block;position:absolute;top:0;left:0;height:100%;width:100%;overflow:hidden;pointer-events:none;z-index:" + (e = this.c).zIndex + ";opacity:" + e.opacity, t.width = this.el.clientWidth, t.height = this.el.clientHeight, this.el.appendChild(t), t
+            }
+        }, {
+            key: "requestFrame",
+            value: function(e) {
+                var t = this;
+                this.tid = v(function() {
+                    return e.call(t)
+                })
+            }
+        }, {
+            key: "drawCanvas",
+            value: function() {
+                var e = this,
+                    t = this.context,
+                    n = this.canvas.width,
+                    o = this.canvas.height,
+                    i = this.current,
+                    r = this.points,
+                    a = this.all;
+                t.clearRect(0, 0, n, o);
+                var s = void 0,
+                    u = void 0,
+                    c = void 0,
+                    l = void 0,
+                    d = void 0,
+                    v = void 0;
+                r.forEach(function(r, f) {
+                    for (r.x += r.xa, r.y += r.ya, r.xa *= r.x > n || r.x < 0 ? -1 : 1, r.ya *= r.y > o || r.y < 0 ? -1 : 1, t.fillStyle = "rgba(" + e.c.pointColor + ")", t.fillRect(r.x - .5, r.y - .5, 1, 1), u = f + 1; u < a.length; u++) null !== (s = a[u]).x && null !== s.y && (l = r.x - s.x, d = r.y - s.y, (v = l * l + d * d) < s.max && (s === i && v >= s.max / 2 && (r.x -= .03 * l, r.y -= .03 * d), c = (s.max - v) / s.max, t.beginPath(), t.lineWidth = c / 2, t.strokeStyle = "rgba(" + e.c.color + "," + (c + .2) + ")", t.moveTo(r.x, r.y), t.lineTo(s.x, s.y), t.stroke()))
+                }), this.requestFrame(this.drawCanvas)
+            }
+        }, {
+            key: "destroy",
+            value: function() {
+                l(this.el), window.onmousemove = this.onmousemove, window.onmouseout = this.onmouseout, f(this.tid), this.canvas.parentNode.removeChild(this.canvas)
+            }
+        }]), e
+    }();
+    y.version = "2.0.4";
+    var w, b;
+    new y(document.body, (w = document.getElementsByTagName("script"), {
+        zIndex: (b = w[w.length - 1]).getAttribute("zIndex"),
+        opacity: b.getAttribute("opacity"),
+        color: b.getAttribute("color"),
+        pointColor: b.getAttribute("pointColor"),
+        count: Number(b.getAttribute("count")) || 99
+    }))
 }();
